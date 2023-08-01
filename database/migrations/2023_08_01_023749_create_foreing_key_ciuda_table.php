@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('provincias', function (Blueprint $table) {
-            $table->integer('id_provincia')->index(); 
-            $table->string('descripcion_provincia');
-            $table->timestamps();
+        Schema::table('ciudades', function (Blueprint $table) {
+            $table->integer('id_provincia');
+
+            $table->foreign('id_provincia')->references('id_provincia')->on('provincias');
         });
     }
 
@@ -27,6 +27,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provincias');
+        Schema::table('ciudades', function (Blueprint $table) {
+            $table->dropForeign(['id_provincia']);
+            $table->dropColumn('id_provincia');
+        });
     }
 };

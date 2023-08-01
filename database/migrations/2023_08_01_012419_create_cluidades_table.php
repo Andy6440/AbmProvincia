@@ -16,14 +16,7 @@ return new class extends Migration
         Schema::create('ciudades', function (Blueprint $table) {
             $table->id('id_ciudad');
             $table->string('descripcion_ciudad');
-            $table->unsignedBigInteger('id_provincia');
             $table->timestamps();
-    
-            // Definir clave foránea
-            $table->foreign('id_provincia')
-                  ->references('id_provincia')
-                  ->on('provincias')
-                  ->onDelete('cascade');
         });
     }
 
