@@ -15,7 +15,9 @@ class ProvinciaSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('provincias')->insert(
+
+        $data =[
+
             [
                 "descripcion_provincia" => "Misiones",
                 "id_provincia" => 54
@@ -130,6 +132,7 @@ class ProvinciaSeeder extends Seeder
                 "descripcion_provincia" => "Tierra del Fuego, Antártid_provinciaa e Islas del Atlántico Sur",
                 "id_provincia" => 94
             ]
-        );
+            ];
+            DB::table('provincias')->insert($data);
     }
 }
