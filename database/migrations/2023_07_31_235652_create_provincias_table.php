@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('provincias', function (Blueprint $table) {
-            $table->id('id_provincia');
+            $table->integer('id_provincia'); // Modificado a integer sin autoincremento ya que tengo cargar las provincias con el id del gobierno de argentina
             $table->string('descripcion_provincia');
             $table->timestamps();
         });
