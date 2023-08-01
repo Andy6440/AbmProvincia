@@ -20,3 +20,5 @@ Route::get('/', function () {
 
 
 Route::resource('provincias',ProvinciaController::class);
+
+

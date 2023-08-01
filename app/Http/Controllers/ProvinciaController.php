@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Provincia;
 use Illuminate\Http\Request;
 
 class ProvinciaController extends Controller
@@ -13,7 +14,9 @@ class ProvinciaController extends Controller
      */
     public function index()
     {
-        //
+        $provincias = Provincia::with('ciudades')->orderBy('descripcion_provincia')->paginate(10);
+        
+        return view('provincias.index',compact('provincias'));
     }
 
     /**
@@ -54,9 +57,13 @@ class ProvinciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
+
     public function edit($id)
     {
-        //
+        #create a new instance of the model
+        $provincia = new Provincia();
+
     }
 
     /**

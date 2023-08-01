@@ -26,4 +26,14 @@ class Provincia extends Model
      * @var array
      */
     protected $fillable = ['descripcion_provincia'];
+
+    /**
+     * the attributes that should be hidden for arrays.
+     *
+     * @var collection
+     */
+    public function ciudades()
+    {
+        return $this->hasMany(Ciudad::class, 'id_provincia');
+    }
 }

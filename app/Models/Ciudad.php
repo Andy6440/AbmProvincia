@@ -26,7 +26,11 @@ class Ciudad extends Model
      * @var array
      */
     protected $fillable = ['descripcion_ciudad','id_provincia'];
-
+    /**
+     * The attributes   that should be hidden for arrays.
+     *
+     * @var collection
+     */
     public function provincia()
     {
         return $this->belongsTo(Provincia::class, 'id_provincia', 'id_provincia');
