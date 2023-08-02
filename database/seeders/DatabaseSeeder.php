@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ProvinciaSeeder::class);
-        $this->call(CiudadSeederSeeder::class);
+        $this->call([
+            ProvinciaSeeder::class,
+            CiudadSeeder::class, 
+        ]);
     }
 }
