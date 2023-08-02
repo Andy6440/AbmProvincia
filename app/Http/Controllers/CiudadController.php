@@ -18,12 +18,12 @@ class CiudadController extends Controller
      */
     public function index()
     {
-        // get ciudad with formar ciudad,provincia order by provincia and ciudad
-        $ciudades = Ciudad::with('provincia:id_provincia,descripcion_provincia')->get(['descripcion_ciudad','id_provincia'])->sortBy(function ($ciudad, $key) {
-            return $ciudad->provincia->descripcion_provincia . $ciudad->descripcion_ciudad;
+        $ciudades = Ciudad::selectRaw('CONCAT(descripcion_ciudad, ", ", provincias.descripcion_provincia) AS ciudad_provincia')
+            ->join('provincias', 'ciudades.id_provincia', '=', 'provincias.id_provincia')
+            ->groupBy('ciudad_provincia')
+            ->pluck('ciudad_provincia')
+            ->toArray();
 
-        });
         return response()->json($ciudades, 200);
     }
-
 }
