@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    // redirec to provincias
+    return redirect()->route('provincias.index');
 });
 
 
