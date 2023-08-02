@@ -25,8 +25,8 @@ class CiudadRequest extends FormRequest
     public function rules()
     {
         return [
-            'descripcion_ciudad' => ['required',  'max:255', 'not_regex:/^[\s]*$/', new UniqueCiudad],
             'id_provincia' => 'required|exists:provincias,id_provincia',
+            'descripcion_ciudad' => ['required',  'max:255', 'not_regex:/^[\s]*$/', new UniqueCiudad],
         ];
     }
     public function messages()

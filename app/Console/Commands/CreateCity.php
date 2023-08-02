@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\CustomHelper;
 use App\Http\Requests\CiudadRequest;
 use App\Http\Requests\ProvinciaRequest;
 use App\Models\Ciudad;
@@ -16,7 +17,7 @@ class CreateCity extends Command
      *
      * @var string
      */
-    protected $signature = 'create:city {ciudad}  {provincia}';
+    protected $signature = 'create:city {ciudad} {provincia}';
 
     /**
      * The console command description.
@@ -32,25 +33,23 @@ class CreateCity extends Command
      */
     public function handle()
     {
-
-        $ciudad = $this->argument('ciudad');
-        $provinciaName = $this->argument('provincia');
+        
+        $ciudad = CustomHelper::addSpacesBeforeUppercase($this->argument('ciudad'));
+        $provinciaName = CustomHelper::addSpacesBeforeUppercase($this->argument('provincia'));
         $provincia = Provincia::where('descripcion_provincia', 'like','%'.strtolower(trim($provinciaName)).'%')->first();
 
         if (!$provincia) {
             $this->error("Provincia {$provinciaName} no existe.");
-            return 1;
+            return Command::FAILURE;
         }
         $ciudadRequest = new CiudadRequest();
-
         $validator = Validator::make([
             'id_provincia' => $provincia->id_provincia,
             'descripcion_ciudad' => $ciudad,
         ], $ciudadRequest->rules());
-
         if ($validator->fails()) {
             $this->error('Error: ' . $validator->errors()->first());
-            return 1;
+            return Command::FAILURE;
         }
 
 

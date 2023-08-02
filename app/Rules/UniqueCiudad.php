@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Helpers\CustomHelper;
 use App\Models\Ciudad;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -27,10 +28,16 @@ class UniqueCiudad implements Rule
      */
     public function passes($attribute, $value)
     {
+        $server = request()->server();
         
-        return !Ciudad::where('descripcion_ciudad', 'like','%'.strtolower(trim($value)).'%')
-        ->where('id_provincia', request()->id_provincia)
+        $provinciaName = CustomHelper::addSpacesBeforeUppercase($server['argv'][3]);
+        return !Ciudad::join('provincias', 'ciudades.id_provincia', '=', 'provincias.id_provincia')
+        ->where('ciudades.descripcion_ciudad', 'like','%'.strtolower(trim($value)).'%')
+        ->where('provincias.descripcion_provincia', 'like','%'.strtolower(trim($provinciaName)).'%')
         ->exists();
+      
+
+
     }
     
 
