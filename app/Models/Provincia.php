@@ -34,6 +34,6 @@ class Provincia extends Model
      */
     public function ciudades()
     {
-        return $this->hasMany(Ciudad::class, 'id_provincia');
+        return $this->hasMany(Ciudad::class, 'id_provincia','id_provincia');
     }
 }

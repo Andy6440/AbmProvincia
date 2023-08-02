@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProvinciaController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,12 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // redirec to provincias
-    return redirect()->route('provincias.index');
+Auth::routes();
+
+// Grupo de rutas con middleware de autenticación
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/',[HomeController::class, 'index']);
+    Route::resource('provincias',ProvinciaController::class);
 });
 
+Auth::routes();
 
-Route::resource('provincias',ProvinciaController::class);
-
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
