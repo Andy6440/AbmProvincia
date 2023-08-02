@@ -32,7 +32,6 @@ class ProvinciaRequest extends FormRequest
     {
         return [
             'descripcion_provincia.required' => 'El nombre de la provincia es obligatorio.',
-            'descripcion_provincia.alpha' => 'El nombre de la provincia sólo puede contener letras.',
             'descripcion_provincia.max' => 'El nombre de la provincia no puede tener más de 255 caracteres.',
             'descripcion_provincia.not_regex' => 'El nombre de la provincia no puede ser sólo espacios en blanco.',
             'descripcion_provincia.unique' => 'Ya existe una provincia con ese nombre.',
