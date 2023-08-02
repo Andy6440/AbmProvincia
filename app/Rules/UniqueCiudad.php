@@ -27,7 +27,8 @@ class UniqueCiudad implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !Ciudad::where('LOWER(TRIM(descripcion_ciudad)) = ?', $value)
+        
+        return !Ciudad::where('descripcion_ciudad', 'like','%'.strtolower(trim($value)).'%')
         ->where('id_provincia', request()->id_provincia)
         ->exists();
     }
