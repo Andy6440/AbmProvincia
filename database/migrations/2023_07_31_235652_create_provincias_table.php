@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('provincias', function (Blueprint $table) {
-            $table->integer('id_provincia')->index(); 
-            $table->string('descripcion_provincia');
+            $table->id('id_provincia');
+            $table->string('descripcion_provincia', 255);
             $table->timestamps();
-        });
+        });       
     }
 
     /**

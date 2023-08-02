@@ -6,16 +6,22 @@
         <div class="col-md-8">
             <div class="container">
                 <h1 class="my-4">Provincias</h1>
-            
+
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <a href="{{ route('provincias.create') }}" class="btn btn-primary mb-3">Crear Provincia</a>
-            
+
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr class="text-center">
-                                <th >ID</th>
-                                <th >Nombre</th>
-                                <th >Acciones</th>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,8 +43,6 @@
                     </table>
                 </div>
                 {{ $provincias->links() }}
-
-               
             </div>
         </div>
     </div>

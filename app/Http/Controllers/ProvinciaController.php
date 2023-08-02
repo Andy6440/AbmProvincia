@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProvinciaRequest;
 use App\Models\Provincia;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProvinciaController extends Controller
@@ -35,13 +37,16 @@ class ProvinciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProvinciaRequest $request)
     {
-        //create provincia
-        $provincia = new Provincia();
-        $provincia->descripcion_provincia = $request->descripcion_provincia;
-        $provincia->save();
-        return redirect()->route('provincias.index')->with('status', 'Provincia creada exitosamente');
+        try {
+            $provincia = new Provincia();
+            $provincia->descripcion_provincia = $request->descripcion_provincia;
+            $provincia->save();
+            return redirect()->route('provincias.index')->with('success', 'Provincia creada con éxito');
+        } catch (Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Hubo un error al crear la provincia. Por favor, inténtalo de nuevo.']);
+        }
     }
 
     /**
@@ -78,7 +83,7 @@ class ProvinciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProvinciaRequest $request, $id)
     {
         $provincia = Provincia::find($id);
         $provincia->descripcion_provincia = $request->descripcion_provincia;
@@ -94,9 +99,13 @@ class ProvinciaController extends Controller
      */
     public function destroy($id)
     {
-        $provincia = Provincia::find($id);
-        $provincia->ciudades()->delete();
-        $provincia->delete();
-        return redirect()->route('provincias.index')->with('status', 'Provincia eliminada exitosamente');
+        try {
+            $provincia = Provincia::find($id);
+            $provincia->ciudades()->delete();
+            $provincia->delete();
+            return redirect()->route('provincias.index')->with('success', 'Provincia ' . $provincia->descripcion_provincia . '  eliminada exitosamente');
+        } catch (Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Hubo un error al crear la provincia. Por favor, inténtalo de nuevo.']);
+        }
     }
 }

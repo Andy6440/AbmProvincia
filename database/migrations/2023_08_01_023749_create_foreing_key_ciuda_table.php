@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
+        // migracion para crear foreing key entre provincias y ciudades
         Schema::table('ciudades', function (Blueprint $table) {
-            $table->integer('id_provincia');
-
-            $table->foreign('id_provincia')->references('id_provincia')->on('provincias');
+            $table->unsignedBigInteger('id_provincia')->nullable();
+            $table->foreign('id_provincia')->references('id_provincia')->on('provincias')->onDelete('set null')->onUpdate('cascade');
         });
+       
     }
 
     /**
@@ -28,8 +29,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('ciudades', function (Blueprint $table) {
-            $table->dropForeign(['id_provincia']);
-            $table->dropColumn('id_provincia');
+          $table->dropForeign('ciudades_id_provincia_foreign');
+          $table->dropColumn('id_provincia');
         });
+
     }
 };
