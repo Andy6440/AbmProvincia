@@ -15,8 +15,7 @@ class ProvinciaController extends Controller
     public function index()
     {
         $provincias = Provincia::with('ciudades')->orderBy('descripcion_provincia')->paginate(10);
-        
-        return view('provincias.index',compact('provincias'));
+        return view('provincias.index', compact('provincias'));
     }
 
     /**
@@ -26,7 +25,8 @@ class ProvinciaController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('provincias.create');
     }
 
     /**
@@ -37,7 +37,11 @@ class ProvinciaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //create provincia
+        $provincia = new Provincia();
+        $provincia->descripcion_provincia = $request->descripcion_provincia;
+        $provincia->save();
+        return redirect()->route('provincias.index')->with('status', 'Provincia creada exitosamente');
     }
 
     /**
@@ -48,7 +52,9 @@ class ProvinciaController extends Controller
      */
     public function show($id)
     {
-        //
+        //mostrar provincia by id
+        $provincia = Provincia::find($id);
+        return view('provincias.show', compact('provincia'));
     }
 
     /**
@@ -57,13 +63,12 @@ class ProvinciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
 
     public function edit($id)
     {
-        #create a new instance of the model
-        $provincia = new Provincia();
-
+        $provincia = Provincia::find($id);
+        return view('provincias.edit', compact('provincia'));
     }
 
     /**
@@ -75,7 +80,10 @@ class ProvinciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $provincia = Provincia::find($id);
+        $provincia->descripcion_provincia = $request->descripcion_provincia;
+        $provincia->save();
+        return redirect()->route('provincias.index')->with('status', 'Provincia actualizada exitosamente');
     }
 
     /**
@@ -86,6 +94,9 @@ class ProvinciaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $provincia = Provincia::find($id);
+        $provincia->ciudades()->delete();
+        $provincia->delete();
+        return redirect()->route('provincias.index')->with('status', 'Provincia eliminada exitosamente');
     }
 }

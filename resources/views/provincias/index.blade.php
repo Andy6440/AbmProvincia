@@ -36,8 +36,9 @@
                         </tbody>
                     </table>
                 </div>
-            
                 {{ $provincias->links() }}
+
+               
             </div>
         </div>
     </div>
