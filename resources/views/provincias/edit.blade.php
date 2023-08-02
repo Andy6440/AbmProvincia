@@ -7,7 +7,7 @@
         <form action="{{ route('provincias.update', $provincia) }}" class="row g-3" method="POST">
             @csrf
             @method('PUT')
-            @include('forms.provincia', ['buttonText' => 'Crear'])
+            @include('forms.provincia', ['buttonText' => 'Editar'])
 
         </form>        
     </div>
