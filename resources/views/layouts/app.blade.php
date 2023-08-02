@@ -35,7 +35,6 @@
         </main>
     </div>
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2"></script>
     <script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 </body>

@@ -27,8 +27,8 @@ class ProvinciaController extends Controller
      */
     public function create()
     {
-
-        return view('provincias.create');
+        $provincias  = Provincia::all();
+        return view('provincias.create', compact('provincias'));
     }
 
     /**
@@ -72,8 +72,9 @@ class ProvinciaController extends Controller
 
     public function edit($id)
     {
+        $provincias  = Provincia::all();
         $provincia = Provincia::find($id);
-        return view('provincias.edit', compact('provincia'));
+        return view('provincias.edit', compact('provincia','provincias'));
     }
 
     /**
