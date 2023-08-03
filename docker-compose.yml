@@ -1,0 +1,64 @@
+version: '3.1'
+
+services:
+  # Servicio de Laravel
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel_app
+    container_name: laravel_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html      
+    networks:
+      - laravel_network
+
+  # Servicio de Nginx
+  webserver:
+    image: nginx
+    container_name: nginx_server
+    restart: unless-stopped
+    ports:
+      - "81:81" # Mapea el puerto 81 del host al puerto 81 del contenedor de Nginx
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - .:/var/www/html
+    env_file:
+      - .env
+    depends_on:
+      - app # Indica que Nginx depende del servicio 'app'
+    networks:
+      - laravel_network
+
+  # Servicio de MySQL
+  db:
+    image: mysql
+    command: --default-authentication-plugin=caching_sha2_password
+    container_name: mysql_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: app
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD} # variable de entorno 
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} # variable de entorno 
+    volumes:
+      - ./mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql # Carga el dump al inicio del contenedor
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel_network
+
+  # Servicio de adminer
+  adminer:
+    image: adminer
+    container_name: adminer_server
+    restart: always
+    ports:
+      - "8080:8080" # Mapea el puerto 8080 del host al puerto 8080 del contenedor de Adminer
+    networks:
+      - laravel_network
+
+networks:
+  laravel_network:
+    driver: bridge

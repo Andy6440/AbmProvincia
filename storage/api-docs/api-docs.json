@@ -1,0 +1,47 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Mi API de Provincias y Ciudades",
+        "description": "Esta es una API para gestionar provincias y listar ciudades.",
+        "contact": {
+            "email": "andreasAlvarado"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "summary": "Iniciar sesión",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "user@example.com",
+                                    "password": "password"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Devuelve un token de acceso."
+                    },
+                    "401": {
+                        "description": "Credenciales inválidas."
+                    }
+                }
+            }
+        }
+    }
+}
