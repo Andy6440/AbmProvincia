@@ -18,6 +18,8 @@ Este proyecto es una aplicación Laravel para gestionar provincias y listar ciud
 - Crear una copia del archivo `.env.example` y renombrarla a `.env`.
 - Actualizar las variables de entorno en el archivo `.env` según tus preferencias.
 
+2. Intalar dependecias
+- Ejecuta los siguientes comandos `composer install` y  `npm install`.
 3. Construir las Imágenes de Docker con `docker-compose --build`
 Este comando construirá las imágenes de los servicios definidos en el archivo `docker-compose.yml` basándose en los Dockerfiles proporcionados.
 
